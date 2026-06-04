@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@utility border-inset {
+  border-style: inset;
+}
+@utility border-outset {
+  border-style: outset;
+}
+@utility border-ridge {
+  border-style: ridge;
+}
