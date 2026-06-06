@@ -1,9 +1,14 @@
 import { useEffect, useRef } from "react";
 
-export const useClickAndDrag = (
-  onDrag: (posX: number, posY: number) => void,
-  dragThreshold: number = 5,
-) => {
+interface ClickAndDragOptions {
+  onDrag?: (posX: number, posY: number) => void;
+  dragThreshold?: number;
+}
+
+export const useClickAndDrag = ({
+  onDrag = () => {},
+  dragThreshold = 5,
+}: ClickAndDragOptions = {}) => {
   const elementRef = useRef<HTMLElement>(null);
   const isDragging = useRef(false);
   const dragStartX = useRef(0);

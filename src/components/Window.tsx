@@ -12,9 +12,11 @@ export const Window = ({ title, children }: WindowProps) => {
   const [x, setX] = useState(200);
   const [y, setY] = useState(300);
 
-  const { ref: headerRef } = useClickAndDrag((posX, posY) => {
-    setX(posX);
-    setY(posY);
+  const { ref: headerRef } = useClickAndDrag({
+    onDrag: (posX, posY) => {
+      setX(posX);
+      setY(posY);
+    },
   });
 
   return (
