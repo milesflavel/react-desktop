@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
 
 interface ClickAndDragOptions {
+  onClick?: () => void;
   onDrag?: (posX: number, posY: number) => void;
   dragThreshold?: number;
 }
 
 export const useClickAndDrag = ({
+  onClick = () => {},
   onDrag = () => {},
   dragThreshold = 5,
 }: ClickAndDragOptions = {}) => {
@@ -54,6 +56,8 @@ export const useClickAndDrag = ({
     const mouseupHandler = (e: MouseEvent) => {
       if (isDragging.current) {
         e.preventDefault();
+      } else {
+        onClick();
       }
 
       document.removeEventListener("mousemove", mousemoveHandler);
@@ -77,7 +81,7 @@ export const useClickAndDrag = ({
 
       isDragging.current = false;
     };
-  }, [elementRef.current, dragThreshold]);
+  }, [elementRef.current, onClick, onDrag, dragThreshold]);
 
   return {
     ref: elementRef,
