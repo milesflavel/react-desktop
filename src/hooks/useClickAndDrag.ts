@@ -30,10 +30,10 @@ export const useClickAndDrag = ({
         const elementRect = element.getBoundingClientRect();
         elementStartX.current = elementRect.left + window.scrollX;
         elementStartY.current = elementRect.top + window.scrollY;
-
-        document.addEventListener("mousemove", mousemoveHandler);
-        document.addEventListener("mouseup", mouseupHandler);
       }
+
+      document.addEventListener("mousemove", mousemoveHandler);
+      document.addEventListener("mouseup", mouseupHandler);
     };
 
     const mousemoveHandler = (e: MouseEvent) => {
@@ -56,10 +56,8 @@ export const useClickAndDrag = ({
         e.preventDefault();
       }
 
-      if (element) {
-        document.removeEventListener("mousemove", mousemoveHandler);
-        document.removeEventListener("mouseup", mouseupHandler);
-      }
+      document.removeEventListener("mousemove", mousemoveHandler);
+      document.removeEventListener("mouseup", mouseupHandler);
 
       isDragging.current = false;
       dragStartX.current = 0;
@@ -75,15 +73,9 @@ export const useClickAndDrag = ({
     return () => {
       if (element) {
         element.removeEventListener("mousedown", mousedownHandler);
-        document.removeEventListener("mousemove", mousemoveHandler);
-        document.removeEventListener("mouseup", mouseupHandler);
       }
 
       isDragging.current = false;
-      dragStartX.current = 0;
-      dragStartY.current = 0;
-      elementStartX.current = 0;
-      elementStartY.current = 0;
     };
   }, [elementRef.current, dragThreshold]);
 
