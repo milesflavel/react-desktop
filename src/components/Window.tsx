@@ -13,10 +13,10 @@ export const Window = ({ title, children }: WindowProps) => {
 
   return (
     <section
-      className="border-ridge absolute flex flex-col border-4 border-neutral-300 bg-neutral-300"
+      className="border-ridge bg-neutral-350 absolute flex flex-col border-4 border-t-neutral-200 border-r-neutral-400 border-b-neutral-400 border-l-neutral-200"
       style={{ width: width, height: height, left: x, top: y }}
     >
-      <header className="flex h-6 w-full items-center bg-linear-to-r from-blue-700 to-blue-900 p-1">
+      <header className="flex h-6 w-full items-center bg-linear-to-r from-blue-900 to-blue-700 p-1">
         <h1 className="text-lg/none font-medium text-white">{title}</h1>
       </header>
       <section className="grow">{children}</section>

@@ -9,3 +9,7 @@
 @utility border-ridge {
   border-style: ridge;
 }
+
+@theme {
+  --color-neutral-350: oklch(78.9% 0 0);
+}
