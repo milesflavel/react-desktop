@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useClickAndDrag } from "../hooks/useClickAndDrag";
+import { WindowHeaderButton } from "./WindowHeaderButton";
 
 export interface WindowProps {
   title?: string;
@@ -30,9 +31,11 @@ export const Window = ({ title, onFocus, children }: WindowProps) => {
     >
       <header
         ref={headerRef}
-        className="flex h-6 w-full cursor-default items-center bg-linear-to-r from-blue-900 to-blue-700 p-1"
+        className="flex h-6 w-full cursor-default items-center gap-0.5 bg-linear-to-r from-blue-900 to-blue-700 p-0.5 select-none"
       >
-        <h1 className="text-lg/none font-medium text-white">{title}</h1>
+        <h1 className="mr-auto text-lg/none font-medium text-white">{title}</h1>
+        <WindowHeaderButton decoration="" />
+        <WindowHeaderButton decoration="" />
       </header>
       <section className="grow">{children}</section>
     </section>
