@@ -34,8 +34,23 @@ export const Window = ({ title, onFocus, children }: WindowProps) => {
         className="flex h-6 w-full cursor-default items-center gap-0.5 bg-linear-to-r from-blue-900 to-blue-700 p-0.5 select-none"
       >
         <h1 className="mr-auto text-lg/none font-medium text-white">{title}</h1>
-        <WindowHeaderButton decoration="" />
-        <WindowHeaderButton decoration="" />
+        <WindowHeaderButton
+          decoration={
+            <svg className="size-full" viewBox="0 0 10 10">
+              <path className="stroke-black stroke-2" d="M 0 9 L 10 9" />
+            </svg>
+          }
+        />
+        <WindowHeaderButton
+          decoration={
+            <svg className="size-full" viewBox="0 0 10 10">
+              <path
+                className="stroke-black stroke-2"
+                d="M 0 0 L 10 10 M 0 10 L 10 0"
+              />
+            </svg>
+          }
+        />
       </header>
       <section className="grow">{children}</section>
     </section>
