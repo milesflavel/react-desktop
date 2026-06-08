@@ -24,6 +24,8 @@ export const useClickAndDrag = ({
     const element = elementRef.current;
 
     const mousedownHandler = (e: MouseEvent) => {
+      e.preventDefault();
+
       isDragging.current = false;
       dragStartX.current = e.pageX;
       dragStartY.current = e.pageY;
