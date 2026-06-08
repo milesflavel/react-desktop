@@ -18,12 +18,30 @@ export const Window = ({ title, onFocus, children }: WindowProps) => {
   const initialX = useRef(0);
   const initialY = useRef(0);
 
+  const handleDragStart = () => {
+    initialWidth.current = width;
+    initialHeight.current = height;
+    initialX.current = x;
+    initialY.current = y;
+  };
+  const handleResizeTop = (dy: number) => {
+    setHeight(initialHeight.current - dy);
+    setY(initialY.current + dy);
+  };
+  const handleResizeRight = (dx: number) => {
+    setWidth(initialWidth.current + dx);
+  };
+  const handleResizeBottom = (dy: number) => {
+    setHeight(initialHeight.current + dy);
+  };
+  const handleResizeLeft = (dx: number) => {
+    setWidth(initialWidth.current - dx);
+    setX(initialX.current + dx);
+  };
+
   const { ref: headerRef } = useClickAndDrag({
     onClick: onFocus,
-    onDragStart: () => {
-      initialX.current = x;
-      initialY.current = y;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, dy) => {
       onFocus?.();
       setX(initialX.current + dx);
@@ -31,97 +49,63 @@ export const Window = ({ title, onFocus, children }: WindowProps) => {
     },
   });
   const { ref: resizeTopLeftRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialWidth.current = width;
-      initialHeight.current = height;
-      initialX.current = x;
-      initialY.current = y;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, dy) => {
       onFocus?.();
-      setWidth(initialWidth.current - dx);
-      setHeight(initialHeight.current - dy);
-      setX(initialX.current + dx);
-      setY(initialY.current + dy);
+      handleResizeTop(dy);
+      handleResizeLeft(dx);
     },
   });
   const { ref: resizeTopRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialHeight.current = height;
-      initialY.current = y;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (_dx, dy) => {
       onFocus?.();
-      setHeight(initialHeight.current - dy);
-      setY(initialY.current + dy);
+      handleResizeTop(dy);
     },
   });
   const { ref: resizeTopRightRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialWidth.current = width;
-      initialHeight.current = height;
-      initialX.current = x;
-      initialY.current = y;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, dy) => {
       onFocus?.();
-      setWidth(initialWidth.current + dx);
-      setHeight(initialHeight.current - dy);
-      setY(initialY.current + dy);
+      handleResizeTop(dy);
+      handleResizeRight(dx);
     },
   });
   const { ref: resizeRightRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialWidth.current = width;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, _dy) => {
       onFocus?.();
-      setWidth(initialWidth.current + dx);
+      handleResizeRight(dx);
     },
   });
   const { ref: resizeBottomRightRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialWidth.current = width;
-      initialHeight.current = height;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, dy) => {
       onFocus?.();
-      setWidth(initialWidth.current + dx);
-      setHeight(initialHeight.current + dy);
+      handleResizeBottom(dy);
+      handleResizeRight(dx);
     },
   });
   const { ref: resizeBottomRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialHeight.current = height;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (_dx, dy) => {
       onFocus?.();
-      setHeight(initialHeight.current + dy);
+      handleResizeBottom(dy);
     },
   });
   const { ref: resizeBottomLeftRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialWidth.current = width;
-      initialHeight.current = height;
-      initialX.current = x;
-      initialY.current = y;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, dy) => {
       onFocus?.();
-      setWidth(initialWidth.current - dx);
-      setHeight(initialHeight.current + dy);
-      setX(initialX.current + dx);
+      handleResizeBottom(dy);
+      handleResizeLeft(dx);
     },
   });
   const { ref: resizeLeftRef } = useClickAndDrag({
-    onDragStart: () => {
-      initialWidth.current = width;
-      initialX.current = x;
-    },
+    onDragStart: handleDragStart,
     onDragMove: (dx, _dy) => {
       onFocus?.();
-      setWidth(initialWidth.current - dx);
-      setX(initialX.current + dx);
+      handleResizeLeft(dx);
     },
   });
 
