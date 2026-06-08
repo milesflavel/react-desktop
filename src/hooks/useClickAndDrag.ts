@@ -2,21 +2,23 @@ import { useEffect, useRef } from "react";
 
 interface ClickAndDragOptions {
   onClick?: () => void;
-  onDrag?: (posX: number, posY: number) => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+  onDragMove?: (dx: number, dy: number) => void;
   dragThreshold?: number;
 }
 
 export const useClickAndDrag = ({
   onClick = () => {},
-  onDrag = () => {},
+  onDragStart = () => {},
+  onDragEnd = () => {},
+  onDragMove = () => {},
   dragThreshold = 5,
 }: ClickAndDragOptions = {}) => {
-  const elementRef = useRef<HTMLElement>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const dragStartX = useRef(0);
   const dragStartY = useRef(0);
-  const elementStartX = useRef(0);
-  const elementStartY = useRef(0);
 
   useEffect(() => {
     const element = elementRef.current;
@@ -25,12 +27,6 @@ export const useClickAndDrag = ({
       isDragging.current = false;
       dragStartX.current = e.pageX;
       dragStartY.current = e.pageY;
-
-      if (element) {
-        const elementRect = element.getBoundingClientRect();
-        elementStartX.current = elementRect.left + window.scrollX;
-        elementStartY.current = elementRect.top + window.scrollY;
-      }
 
       document.addEventListener("mousemove", mousemoveHandler);
       document.addEventListener("mouseup", mouseupHandler);
@@ -45,9 +41,10 @@ export const useClickAndDrag = ({
 
         if (distance > dragThreshold) {
           isDragging.current = true;
+          onDragStart();
         }
       } else {
-        onDrag(elementStartX.current + dx, elementStartY.current + dy);
+        onDragMove(dx, dy);
       }
     };
 
@@ -64,8 +61,7 @@ export const useClickAndDrag = ({
       isDragging.current = false;
       dragStartX.current = 0;
       dragStartY.current = 0;
-      elementStartX.current = 0;
-      elementStartY.current = 0;
+      onDragEnd();
     };
 
     if (element) {
@@ -79,7 +75,14 @@ export const useClickAndDrag = ({
 
       isDragging.current = false;
     };
-  }, [elementRef.current, onClick, onDrag, dragThreshold]);
+  }, [
+    elementRef.current,
+    onClick,
+    onDragStart,
+    onDragEnd,
+    onDragMove,
+    dragThreshold,
+  ]);
 
   return {
     ref: elementRef,
